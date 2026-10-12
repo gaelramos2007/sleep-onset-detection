@@ -1,0 +1,14 @@
+[ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
+EEG = pop_loadset('filename','eeglab_data.set','filepath','/Users/gaelrc/Desktop/EEG Project/eeglab2026.1.0/sample_data/');
+[ALLEEG, EEG, CURRENTSET] = eeg_store( ALLEEG, EEG, 0 );
+pop_eegplot( EEG, 1, 1, 1);
+figure; topoplot([],EEG.chanlocs, 'style', 'blank',  'electrodes', 'labelpoint', 'chaninfo', EEG.chaninfo);
+figure; pop_spectopo(EEG, 1, [0      238304.6875], 'EEG' , 'freq', [6 10 22], 'freqrange',[2 30],'electrodes','off');
+EEG = pop_eegfiltnew(EEG, 'locutoff',1,'hicutoff',40,'plotfreqz',1);
+figure; pop_spectopo(EEG, 1, [0      238304.6875], 'EEG' , 'freq', [6 10 22], 'freqrange',[2 30],'electrodes','off');
+[ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'setname','filtered 1-40 Hz','gui','off'); 
+
+- EEG variable: holds all the EEG information and is the main variable from where to use . subcommands or "fields" based on it (.data, .srate, etc.)
+- Blinks were large, slow rounded bumps on the front channels near the eyes, muscle noice was more fast and spiky
+- Alpha appeared near the 10Hz mark at the back center of the head (occipital/parietal area)
+- eegh turns all the menu clicks from EEGLAB into code
